@@ -23,10 +23,21 @@
 </head>
 <body>
 
-<c:forEach var="str" items="${strings}">
-    ${str}
-    <br>
-</c:forEach>
+<table width="300" border="1">
+    <tr>
+        <th>Name</th>
+        <th>Test</th>
+        <th>Adress</th>
+    </tr>
+
+    <c:forEach var="temp" items="${accidents}">
+        <tr>
+            <td>${temp.name}</td>
+            <td>${temp.text}</td>
+            <td>${temp.address}</td>
+        </tr>
+    </c:forEach>
+</table>
 
 </body>
 </html>

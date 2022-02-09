@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class IndexControl {
+public class IndexControl1 {
 
     @GetMapping("/")
     public String index(Model model) {
