@@ -23,18 +23,39 @@
 </head>
 <body>
 
+<a href="<c:url value='/create'/>">Добавить инцидент</a>
+<a href="<c:url value='/index'/>">Показать все инциденты</a>
+
 <table width="300" border="1">
     <tr>
         <th>Name</th>
         <th>Test</th>
-        <th>Adress</th>
+        <th>Address</th>
     </tr>
 
     <c:forEach var="temp" items="${accidents}">
+
+<%--        <c:url var="updateButton" value="'/update'/">--%>
+        <c:url var="updateButton" value="/update">
+            <c:param name="id" value="${temp.id}"/>
+            <c:param name="name" value="${temp.name}"/>
+            <c:param name="text" value="${temp.text}"/>
+            <c:param name="address" value="${temp.address}"/>
+        </c:url>
+
         <tr>
+            <td>${temp.id}</td>
             <td>${temp.name}</td>
             <td>${temp.text}</td>
             <td>${temp.address}</td>
+
+
+            <td>
+                    <input type="button" value="Update Accident"
+                           onclick="window.location.href = '${updateButton}'"/>
+            </td>
+
+
         </tr>
     </c:forEach>
 </table>
