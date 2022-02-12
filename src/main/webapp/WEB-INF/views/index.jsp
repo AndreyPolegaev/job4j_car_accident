@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -20,41 +21,38 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Accident</title>
+
+<%--    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"></c:url>">--%>
 </head>
 <body>
 
 <a href="<c:url value='/create'/>">Добавить инцидент</a>
+<br>
 <a href="<c:url value='/index'/>">Показать все инциденты</a>
 
 <table width="300" border="1">
     <tr>
         <th>Name</th>
-        <th>Test</th>
+        <th>Text</th>
         <th>Address</th>
     </tr>
 
     <c:forEach var="temp" items="${accidents}">
 
-<%--        <c:url var="updateButton" value="'/update'/">--%>
+<%--        это ссылка под каждую запись--%>
         <c:url var="updateButton" value="/update">
             <c:param name="id" value="${temp.id}"/>
-            <c:param name="name" value="${temp.name}"/>
-            <c:param name="text" value="${temp.text}"/>
-            <c:param name="address" value="${temp.address}"/>
         </c:url>
 
         <tr>
-            <td>${temp.id}</td>
             <td>${temp.name}</td>
             <td>${temp.text}</td>
             <td>${temp.address}</td>
 
-
             <td>
-                    <input type="button" value="Update Accident"
-                           onclick="window.location.href = '${updateButton}'"/>
+                <input type="button" value="Update Accident"
+                       onclick="window.location.href = '${updateButton}'"/>
             </td>
-
 
         </tr>
     </c:forEach>

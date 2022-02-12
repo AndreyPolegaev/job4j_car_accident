@@ -6,9 +6,11 @@
     <table>
         <tr>
             <td>Название:</td>
-            <td><input type='text' name='name'></td>
-            <td><input type='text' name='text'></td>
-            <td><input type='text' name='address'></td>
+            <td><input type='text' name='name' placeholder="Name of Accident?"></td>
+            <br>
+            <td><input type='text' name='text' placeholder="Description?"></td>
+            <br>
+            <td><input type='text' name='address' placeholder="Adress of Accident?"></td>
         </tr>
         <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>

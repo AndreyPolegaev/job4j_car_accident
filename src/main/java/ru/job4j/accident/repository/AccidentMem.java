@@ -36,6 +36,7 @@ public class AccidentMem {
 
     public void save(Accident accident) {
 
+        accident.setId(++count);
         accidents.put(ai.getAndIncrement(), accident);
     }
 
