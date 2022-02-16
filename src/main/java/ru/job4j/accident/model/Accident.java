@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,15 +18,19 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+    private AccidentType type;
+    private Collection<Rule> rules;
 
     public Accident(String name) {
         this.name = name;
     }
 
-    public Accident(String name, String text, String address) {
+    public Accident(String name, String text, String address, AccidentType accidentType, Collection<Rule> rules) {
         this.name = name;
         this.text = text;
         this.address = address;
+        this.type = accidentType;
+        this.rules = rules;
     }
 
     @Override

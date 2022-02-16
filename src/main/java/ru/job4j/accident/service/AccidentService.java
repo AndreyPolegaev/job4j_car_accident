@@ -2,10 +2,10 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /** логика работы
  *  Сервис зависит от Repository
@@ -14,15 +14,43 @@ import java.util.List;
 @Service
 public class AccidentService {
 
-    private AccidentMem accidentMem;
+    private final AccidentMem accidentMem;
 
     public AccidentService(AccidentMem accidentMem) {
         this.accidentMem = accidentMem;
     }
 
     public List<Accident> getAllAccident() {
-        List<Accident> accidents = new ArrayList<>(accidentMem.getAllAccident());
-        return accidents;
+        return new ArrayList<>(accidentMem.getAllAccident());
     }
 
+    public void save(Accident accident, String[] ids) {
+        Map<Integer, Rule> rules = accidentMem.getRules();
+        Set<Rule> rsl = new HashSet<>();
+        for (String temp : ids) {
+            for (Integer i : rules.keySet()) {
+                if (i == Integer.parseInt(temp)) {
+                    rsl.add(rules.get(i));
+                }
+            }
+        }
+        accident.setRules(rsl);
+        accidentMem.save(accident);
+    }
+
+    public Collection<AccidentType> getTypes() {
+        return accidentMem.getTypes();
+    }
+
+    public Collection<Rule> getRules() {
+        return accidentMem.getRules().values();
+    }
+
+    public void update(Accident accident) {
+        accidentMem.update(accident);
+    }
+
+    public Accident getAccidentById(int id) {
+        return accidentMem.getAccidentById(id);
+    }
 }
