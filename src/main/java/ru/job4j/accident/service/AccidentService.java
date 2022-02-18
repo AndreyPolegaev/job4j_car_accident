@@ -5,10 +5,12 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
+
 import java.util.*;
 
-/** логика работы
- *  Сервис зависит от Repository
+/**
+ * логика работы
+ * Сервис зависит от Repository
  */
 
 @Service
@@ -28,14 +30,12 @@ public class AccidentService {
         Map<Integer, Rule> rules = accidentMem.getRules();
         Set<Rule> rsl = new HashSet<>();
         for (String temp : ids) {
-            for (Integer i : rules.keySet()) {
-                if (i == Integer.parseInt(temp)) {
-                    rsl.add(rules.get(i));
-                }
+            if (rules.containsKey(Integer.parseInt(temp))) {
+                rsl.add(rules.get(Integer.parseInt(temp)));
             }
+            accident.setRules(rsl);
+            accidentMem.save(accident);
         }
-        accident.setRules(rsl);
-        accidentMem.save(accident);
     }
 
     public Collection<AccidentType> getTypes() {

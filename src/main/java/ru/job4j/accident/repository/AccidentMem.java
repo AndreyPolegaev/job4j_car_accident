@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class AccidentMem {
 
-    private final HashMap<Integer, Accident> accidents = new HashMap<>();
+    private final Map<Integer, Accident> accidents = new HashMap<>();
     private final Map<Integer, AccidentType> types = new HashMap<>();
     private final Map<Integer, Rule> rules = new HashMap<>();
     private final AtomicInteger ai = new AtomicInteger(1);
