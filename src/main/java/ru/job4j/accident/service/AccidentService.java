@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * логика работы
@@ -16,41 +18,44 @@ import java.util.*;
 @Service
 public class AccidentService {
 
-    private final AccidentMem accidentMem;
+    private final AccidentJdbcTemplate accidents;
 
-    public AccidentService(AccidentMem accidentMem) {
-        this.accidentMem = accidentMem;
+    public AccidentService(AccidentJdbcTemplate accidents) {
+        this.accidents = accidents;
     }
 
     public List<Accident> getAllAccident() {
-        return new ArrayList<>(accidentMem.getAllAccident());
+        return new ArrayList<>(accidents.getAllAccident());
     }
 
     public void save(Accident accident, String[] ids) {
-        Map<Integer, Rule> rules = accidentMem.getRules();
+        Map<Integer, Rule> rules = new HashMap<>();
+        for (Rule temp : accidents.getRules()) {
+            rules.put(temp.getId(), temp);
+        }
         Set<Rule> rsl = new HashSet<>();
         for (String temp : ids) {
             if (rules.containsKey(Integer.parseInt(temp))) {
                 rsl.add(rules.get(Integer.parseInt(temp)));
             }
             accident.setRules(rsl);
-            accidentMem.save(accident);
+            accidents.save(accident);
         }
     }
 
     public Collection<AccidentType> getTypes() {
-        return accidentMem.getTypes();
+        return accidents.getTypes();
     }
 
     public Collection<Rule> getRules() {
-        return accidentMem.getRules().values();
+        return accidents.getRules();
     }
 
     public void update(Accident accident) {
-        accidentMem.update(accident);
+        accidents.update(accident);
     }
 
     public Accident getAccidentById(int id) {
-        return accidentMem.getAccidentById(id);
+        return accidents.getAccidentById(id);
     }
 }
