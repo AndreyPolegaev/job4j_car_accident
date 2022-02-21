@@ -1,15 +1,23 @@
 package ru.job4j.accident.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "accidenttype")
 @Getter
 @Setter
+@NoArgsConstructor
 public class AccidentType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
 
     public static AccidentType of(int id, String name) {
@@ -38,8 +46,6 @@ public class AccidentType {
 
     @Override
     public String toString() {
-        return "AccidentType{"
-                + "name='" + name + '\''
-                + '}';
+        return String.format("Тип: %s", name);
     }
 }

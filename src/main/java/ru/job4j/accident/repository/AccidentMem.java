@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * хранилище инцидентов
  */
 
-@Repository
+//@Repository
 public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new HashMap<>();
@@ -26,9 +26,9 @@ public class AccidentMem {
         rules.put(1, Rule.of(1, "Статья. 1"));
         rules.put(2, Rule.of(2, "Статья. 2"));
         rules.put(3, Rule.of(3, "Статья. 3"));
-        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Авария", "desc1", "Ленинский пр-т д.1", types.get(0), rules.values()));
-        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Нарушение ПДД", "desc2", "ул. Зорге д.5", types.get(0), rules.values()));
-        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Уехал с места ДТП", "desc3", "ул. Вавилова д.3", types.get(0), rules.values()));
+//        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Авария", "desc1", "Ленинский пр-т д.1", types.get(0), rules.values()));
+//        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Нарушение ПДД", "desc2", "ул. Зорге д.5", types.get(0), rules.values()));
+//        accidents.put(ai.getAndIncrement(), new Accident(ai.get() - 1, "Уехал с места ДТП", "desc3", "ул. Вавилова д.3", types.get(0), rules.values()));
     }
 
     public Collection<Accident> getAllAccident() {

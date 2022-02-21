@@ -4,11 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
-import ru.job4j.accident.repository.AccidentMem;
-
+import ru.job4j.accident.repository.AccidentHibernate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * логика работы
@@ -18,9 +15,9 @@ import java.util.stream.Collectors;
 @Service
 public class AccidentService {
 
-    private final AccidentJdbcTemplate accidents;
+    private final AccidentHibernate accidents;
 
-    public AccidentService(AccidentJdbcTemplate accidents) {
+    public AccidentService(AccidentHibernate accidents) {
         this.accidents = accidents;
     }
 
@@ -28,29 +25,30 @@ public class AccidentService {
         return new ArrayList<>(accidents.getAllAccident());
     }
 
-    public void save(Accident accident, String[] ids) {
-        Map<Integer, Rule> rules = new HashMap<>();
-        for (Rule temp : accidents.getRules()) {
-            rules.put(temp.getId(), temp);
-        }
+    /** получаем id статей и id Типа*/
+    public void save(Accident accident, String[] ids, String type) {
         Set<Rule> rsl = new HashSet<>();
-        for (String temp : ids) {
-            if (rules.containsKey(Integer.parseInt(temp))) {
-                rsl.add(rules.get(Integer.parseInt(temp)));
+        AccidentType newType = accidents.getTypeById(Integer.parseInt(type));
+        if (ids != null && ids.length != 0) {
+            for (String temp : ids) {
+                rsl.add(accidents.getRulesById(Integer.parseInt(temp)));
             }
-            accident.setRules(rsl);
-            accidents.save(accident);
+        } else {
+            rsl = Collections.emptySet();
         }
+        accident.setRules(rsl);
+        accident.setType(newType);
+        accidents.save(accident);
     }
-
+     
     public Collection<AccidentType> getTypes() {
         return accidents.getTypes();
     }
-
+     
     public Collection<Rule> getRules() {
         return accidents.getRules();
     }
-
+     
     public void update(Accident accident) {
         accidents.update(accident);
     }

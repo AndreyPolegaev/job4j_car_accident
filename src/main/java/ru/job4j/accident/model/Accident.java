@@ -1,36 +1,55 @@
 package ru.job4j.accident.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.persistence.*;
+import java.util.*;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
-
+@Entity
+@Table(name = "accident")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Accident {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "text")
     private String text;
+
+    @Column(name = "address")
     private String address;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "type_id")
     private AccidentType type;
-    private Collection<Rule> rules;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "accident_rules",
+            joinColumns = @JoinColumn(name = "accident_id"),
+            inverseJoinColumns = @JoinColumn(name = "rules_id"))
+    private Set<Rule> rules = new HashSet<>();
 
     public Accident(String name) {
         this.name = name;
     }
 
-    public Accident(String name, String text, String address, AccidentType accidentType, Collection<Rule> rules) {
+    public Accident(String name, String text, String address, AccidentType accidentType, Set<Rule> rules) {
         this.name = name;
         this.text = text;
         this.address = address;
         this.type = accidentType;
         this.rules = rules;
+    }
+
+    public void addRule(Rule rule) {
+        rules.add(rule);
     }
 
     @Override

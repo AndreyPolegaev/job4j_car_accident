@@ -30,11 +30,13 @@
 <br>
 <a href="<c:url value='/index'/>">Показать все инциденты</a>
 
-<table width="800" border="1">
+<table width="1000" border="1">
     <tr>
         <th>Инцидент</th>
         <th>Описание инцидента</th>
         <th>Адрес инцидента</th>
+        <th>Тип инцидента</th>
+        <th>Статья</th>
         <th>Обновить данные</th>
     </tr>
 
@@ -49,10 +51,18 @@
             <td>${temp.name}</td>
             <td>${temp.text}</td>
             <td>${temp.address}</td>
+            <td>${temp.type}</td>
+            <td>
+                <c:forEach var="te" items="${temp.rules}">
+                ${te} <br>
+                </c:forEach>
+            </td>
             <td>
                 <input type="button" value="Update Accident"
                        onclick="window.location.href = '${updateButton}'"/>
             </td>
+
+
 
         </tr>
     </c:forEach>
