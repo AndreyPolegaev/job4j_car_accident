@@ -3,16 +3,16 @@ package ru.job4j.accident.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.job4j.accident.service.AccidentService;
+import ru.job4j.accident.service.AccidentDataService;
 
 /** Контроллер зависит от Сервис*/
 
 @Controller
 public class IndexControl {
 
-    private AccidentService service;
+    private AccidentDataService service;
 
-    public IndexControl(AccidentService service) {
+    public IndexControl(AccidentDataService service) {
         this.service = service;
     }
 
