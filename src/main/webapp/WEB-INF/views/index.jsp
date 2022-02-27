@@ -30,6 +30,10 @@
 <br>
 <a href="<c:url value='/index'/>">Показать все инциденты</a>
 
+<div>
+    Login as : ${user.username}
+</div>
+
 <table width="1000" border="1">
     <tr>
         <th>Инцидент</th>
